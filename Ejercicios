@@ -1,0 +1,240 @@
+__author__ = 'Luis APAZA'
+
+print("♣"*23,"El juego de la Ruleta","♣"*24)
+
+import random
+
+print("♠"*90)
+print("♠            APUESTA                 ♠               CUANTO GANA?            ♠")
+print("♠"*90)
+print("♠ Par/Impar-Rojo/Negro-Pasa/Falta    ♠ Recupera 1 ficha y gana 1             ♠")
+print("♠"*90)
+print("♠Docenas/Columnas                    ♠ Recupera 1 ficha y gana 2             ♠")
+print("♠"*90)
+print("♠Pleno (número)                      ♠ Recupera 1 ficha y gana 35            ♠")
+print("♠"*90)
+
+print("╔"+"═"*55+"╗")
+print("║ ║","\033[0;31m3"+"\033[0m","║","6","║","\033[0;31m9"+"\033[0m","║","\033[0;31m12"+"\033[0m","║","15","║","\033[0;31m18"+"\033[0m","║","\033[0;31m21"+"\033[0m","║","24","║","\033[0;31m27"+"\033[0m","║","\033[0;31m30"+"\033[0m","║","33","║","\033[0;31m36"+"\033[0m","║"," 2 a 1 ║")
+print("║","╠"+"═"*46+"╣"+"═"*6)
+print("║0║","2","║","\033[0;31m5"+"\033[0m","║","8","║","11","║","\033[0;31m14"+"\033[0m","║","17","║","20","║","\033[0;31m23"+"\033[0m","║","26","║","29","║","\033[0;31m32"+"\033[0m","║","35 ║"," 2 a 1 ║")
+print("║","╠"+"═"*46+"╣"+"═"*6)
+print("║ ║","\033[0;31m1"+"\033[0m","║","4","║","\033[0;31m7"+"\033[0m","║","10","║","13","║","\033[0;31m16"+"\033[0m","║","\033[0;31m19"+"\033[0m","║","22","║","\033[0;31m25"+"\033[0m","║","28","║","31","║","\033[0;31m34"+"\033[0m","║"," 2 a 1 ║")
+print("╚"+"═"*55+"╝")
+print("  ║    1° Docena    ║     2° Docena      ║      3° Docena     ║")
+print("  ╠"+"═"*46+"╣")
+print("  ║  1-18  ║   PAR  ║","   ♦    ║","    \033[0;31m♦"+"\033[0m    ║"," IMPAR  ║  19-36  ║")
+print("  ╚"+"═"*46+"╝")
+
+print("*"*28,"Bienvenido al juego","*"*28)
+
+#FICHAS
+
+def fichas_totales():
+    fichas = int(input('Ingrese la cantidad de fichas con las que cuenta en total: '))
+    while fichas < 0:
+        fichas= int(input("Ingresó un número incorrecto! Intente nuevamente: "))
+    return fichas
+
+def validar_ficha():
+    fichas = int(input('Ingrese cantidad de fichas a apostar en esta sección: '))
+    while fichas < fichas_totales():
+        fichas= int(input("Ingresó un número incorrecto! Intente nuevamente: "))
+    return fichas
+
+#numero aleatorio
+def num_aleatorio():
+    num_ale = random.randrange(0,37)
+    return num_ale
+
+def imprimir_aleatorio():
+    n = num_aleatorio()
+    print(n)
+
+#opcion de pleno
+def pleno(num):
+    num_ale = num_aleatorio()
+    fic_gan = fic_rec = 0
+    if num == num_ale:
+        fic_gan += 35
+        fic_rec += 1
+    return num
+
+#opcion par/impar
+def pares(parimp):
+    validar_ficha()
+    num_ale = num_aleatorio()
+    fic_gan = fic_rec = 0
+    if parimp != 0:
+        if parimp == 1 and num_ale %2 == 0 or parimp == 2 and (num_ale %2)!=0:
+            fic_gan = fic_gan + 1
+            fic_rec=fic_rec+1
+    return parimp
+
+#opcion columna
+def columnas(columna):
+    num_ale = num_aleatorio()
+    fic_gan = fic_rec= 0
+    if columna!=0:
+      if columna == 1 and num_ale % 3 == 1 or columna == 2 and num_ale%3 == 2 or columna == 3 and num_ale%3 == 0:
+         fic_gan=fic_gan+2
+         fic_rec=fic_rec+1
+    return columna
+
+#opcion docena
+def docenas(docena):
+    num_ale = num_aleatorio()
+    fic_gan = fic_rec = 0
+    if num_ale >= 1 and num_ale <= 12:
+        print('Salió DOCENA 1')
+        if docena == 'DOCENA1':
+            fic_gan += 2
+            fic_rec += 1
+    elif lanzamiento >= 13 and lanzamiento <= 24:
+        print('Salió DOCENA 2')
+        if docena == 'DOCENA2':
+            fic_gan += 2
+            fic_rec += 1
+    else:
+        print('Salió DOCENA 3')
+        if docenas == 'DOCENA3':
+            fic_gan += 2
+            fic_rec += 1
+    return docena
+
+
+#opcion pasa/falta
+def pasafalta(pasfal):
+    num_ale = num_aleatorio()
+    fic_gan = fic_rec = 0
+    if num_ale >= 1 and num_ale <= 18:
+        print('Salió FALTA')
+        if pasfal == 1:
+            fic_gan += 1
+            fic_rec += 1
+
+    elif num_ale >= 19 and num_ale <= 36:
+        print('Salió PASA')
+        if pasfal == 2:
+            fic_gan += 1
+            fic_rec += 1
+
+    return pasfal
+
+#color
+def colores(color):
+    num_ale = num_aleatorio()
+    fic_gan = fic_rec = 0
+    if color!=0:
+        if num_ale % 2 == 0:
+            if num_ale >= 1 and num_ale <= 10:
+
+                if color == 1:
+                    fic_gan=fic_gan+ 1
+                    fic_rec=fic_rec+ 1
+        if num_ale >= 11 and num_ale<= 18:
+
+            if color == 2:
+                fic_gan = fic_gan +1
+                fic_rec = fic_rec+1
+        if num_ale >= 19 and num_ale <= 28:
+
+            if color == 1:
+                fic_gan =fic_gan+ 1
+                fic_rec =fic_rec+ 1
+        if num_ale >= 28 and num_ale <= 36:
+
+            if color == 2:
+                fic_gan =fic_gan+ 1
+                fic_rec =fic_rec+ 1
+    else:
+        if num_ale >= 1 and num_ale <= 10:
+            if color == 2:
+                fic_gan =fic_gan+ 1
+                fic_rec =fic_rec+ 1
+        if num_ale >= 11 and num_ale <= 18:
+            if color == 1:
+                fic_gan =fic_gan+ 1
+                fic_rec=fic_rec+1
+        if num_ale>= 19 and num_ale <= 28:
+
+            if color == 2:
+                fic_gan =fic_gan+ 1
+                fic_rec =fic_rec+ 1
+        if num_ale >= 28 and num_ale <= 36:
+
+            if color == 1:
+                fic_gan =fic_gan+ 1
+                fic_rec =fic_rec+ 1
+    return color
+
+
+
+#FICHAS Y DINERO
+def dinero(fic_rec, fic_gan):
+    fichasryg=fic_gan+fic_rec
+    dinero_total=fichasryg*100
+    dinero_casino=(dinero_total*5)/100
+    dinero_ganado=dinero_total-dinero_casino
+
+    print("Fichas Ganadas:",fic_gan)
+    print("Fichas Recuperadas:",fic_rec)
+    print("Total de Fichas",fichasryg)
+    print("Dinero Ganado:$",dinero_ganado)
+
+#OPCIONES DE JUEGO
+def menu():
+    op = 1
+    fic_rec = fic_gan = 0
+    #fichas_totales()
+
+    while op > 0 and op != ' ' and op < 10:
+        print('OPCIONES'.center(100))
+        print(' '.center(25), '1)  Apostar Rojo/Negro')
+        print(' '.center(25), '2)  Apostar Par/Impar')
+        print(' '.center(25), '3)  Apostar Pasa/Falta')
+        print(' '.center(25), '4)  Apostar Columna')
+        print(' '.center(25), '5)  Apostar Docena')
+        print(' '.center(25), '6)  Apostar Pleno')
+        print(' '.center(25), '7)  No va más!')
+        print(' '.center(25), '8)  Retirarse')
+        print(' '.center(25), '9)  Salir.')
+
+
+
+        op = int(input('Elija una opción: '))
+
+        if op == 1:
+            color = int(input("Elija segun corresponda a su numero 1-NEGRO o 2-ROJO"))
+            colores(color)
+
+        elif op == 2:
+            parimp = int(input("Elija segun corresponda a su numero 1-PAR o 2-IMPAR "))
+            pares(parimp)
+
+        elif op == 3:
+            pasfal = int(input("Elija segun corresponda a su numero 1-FALTA o 2-PASA"))
+            pasafalta(pasfal)
+
+        elif op == 4:
+            columna = int(input('"Elija segun corresponda a su numero 1-PRIMER COLUMNA, 2-SEGUNDA COLUMNA o 3-TERCER COLUMNA"'))
+            columnas(columna)
+
+        elif op == 5:
+            docena = int(input("Elija segun corresponda a su numero 1-PRIMER DOCENA,2-SEGUNDA DOCENA o 3-TERCER DOCENA"))
+            docenas(docena)
+
+        elif op == 6:
+            num = int(input("Ingrese un numero del 0 al 36:"))
+            pleno(num)
+
+        elif op == 7:
+            pass
+
+        elif op == 8:
+            dinero(fic_rec, fic_gan)
+
+        else:
+            print('Fin del programa...')
+
+menu()
